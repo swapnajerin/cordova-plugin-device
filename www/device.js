@@ -45,6 +45,7 @@ function Device () {
     this.isVirtual = null;
     this.serial = null;
 
+    this.imei = null;
     var me = this;
 
     channel.onCordovaReady.subscribe(function () {
@@ -57,6 +58,7 @@ function Device () {
             me.version = info.version;
             me.uuid = info.uuid;
             me.cordova = buildLabel;
+            me.imei = info.imei;
             me.model = info.model;
             me.isVirtual = info.isVirtual;
             me.manufacturer = info.manufacturer || 'unknown';
