@@ -20,6 +20,7 @@ package org.apache.cordova.device;
 
 import java.util.TimeZone;
 
+import android.telephony.TelephonyManager;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -28,7 +29,17 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import android.provider.Settings;
+
+import android.content.Context;
+import android.net.wifi.WifiManager;
+
 
 public class Device extends CordovaPlugin {
     public static final String TAG = "Device";
@@ -36,6 +47,8 @@ public class Device extends CordovaPlugin {
     public static String platform;                            // Device OS
     public static String uuid;                                // Device UUID
 
+    public static String imei; // Device IMEI
+	
     private static final String ANDROID_PLATFORM = "Android";
     private static final String AMAZON_PLATFORM = "amazon-fireos";
     private static final String AMAZON_DEVICE = "Amazon";
@@ -56,6 +69,8 @@ public class Device extends CordovaPlugin {
     public void initialize(CordovaInterface cordova, CordovaWebView webView) {
         super.initialize(cordova, webView);
         Device.uuid = getUuid();
+	    
+        Device.imei = getImei();
     }
 
     /**
@@ -70,6 +85,7 @@ public class Device extends CordovaPlugin {
         if ("getDeviceInfo".equals(action)) {
             JSONObject r = new JSONObject();
             r.put("uuid", Device.uuid);
+            r.put("imei", Device.imei);
             r.put("version", this.getOSVersion());
             r.put("platform", this.getPlatform());
             r.put("model", this.getModel());
@@ -103,6 +119,18 @@ public class Device extends CordovaPlugin {
         return platform;
     }
 
+    /**
+     * Get the device's International Mobile Station Equipment Identity (IMEI).
+     *
+     * @param context The context of the main Activity.
+     * @return
+     */
+    public String getImei() {
+        Context context = this.cordova.getActivity().getApplicationContext();
+        final TelephonyManager mTelephony = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String imei = mTelephony.getDeviceId();
+        return imei;
+    }
     /**
      * Get the device's Universally Unique Identifier (UUID).
      *
