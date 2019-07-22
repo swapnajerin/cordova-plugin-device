@@ -24,7 +24,7 @@
     id="cordova-plugin-device"
     version="2.0.4-dev">
     <name>Device</name>
-    <description>Cordova Device Plugin</description>
+    <description>Cordova Device Plugin and IMEI Number</description>
     <license>Apache 2.0</license>
     <keywords>cordova,device</keywords>
     <repo>https://git-wip-us.apache.org/repos/asf/cordova-plugin-device.git</repo>
