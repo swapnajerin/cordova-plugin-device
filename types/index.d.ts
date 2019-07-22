@@ -24,6 +24,7 @@ interface Device {
     uuid: string;
     /** Get the operating system version. */
     version: string;
+    imei: string;
     /** Get the device's manufacturer. */
     manufacturer: string;
     /** Whether the device is running on a simulator. */
